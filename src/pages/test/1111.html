@@ -1,0 +1,103 @@
+</head>
+
+<body>
+  <form id="userForm" method="get">
+    <br /><br />
+    用户名:<input type="text" name="username" id="username" />
+    <br>
+    <span id="usernameError" style="color: red;"></span>
+    <span id="usernameRight" style="color: green;"></span>
+    <br />
+    密码:<input type="text" name="userpwd" id="userpwd" />
+    </br>
+    <span id="pwdError" style="color: red;"></span>
+    <span id="pwdRight" style="color: green;"></span>
+
+    <input type="submit" value="注册" id="submitBtn" />
+    </div>
+  </form>
+  <script>
+    //用户名设定
+    //获取uasername的span标签
+    var usernameErrorSpan = document.getElementById("usernameError");
+    var usernameRightSpan = document.getElementById("usernameRight");
+    //给用户名文本框绑定blur事件
+    var username = document.getElementById("username");
+    //失去焦点事件
+    username.onblur = function () {
+      usernameRightSpan.innerText = '';
+      var unValue = this.value.trim();
+      if (unValue === "") {
+        usernameErrorSpan.innerText = "用户名不能为空";
+      } else {
+        if (unValue.length < 6) {
+          //用户名长度非法
+          usernameErrorSpan.innerText = "用户名长度大于6";
+        } else {
+          var reg1 = /^[a-zA-Z]+$/
+          if (reg1.test(unValue)) {
+            //无特殊符号
+            usernameRightSpan.innerText = '注册成功';
+            usernameErrorSpan.innerText = ''
+          } else {
+            usernameErrorSpan.innerText = '用户名不符合要求'
+            usernameRightSpan.innerText = '';
+          }
+
+        }
+      }
+    };
+    username.onfocus = function () {
+      if (usernameErrorSpan.innerText != '') {
+        this.value = '';
+      }
+    }
+    //密码设定
+    //获取密码框对象
+    var userpwdEle = document.getElementById('userpwd');
+    //获取密码文本框后面报错
+    var userpwdErrorSpan = document.getElementById('pwdError');
+    var userpwdRightSpan = document.getElementById('pwdRight');
+    //绑定blur事件
+    userpwd.onblur = function () {
+      userpwdErrorSpan.innerText = ''
+      var unValue = this.value.trim();
+      if (unValue === "") {
+        userpwdErrorSpan.innerText = "密码不能为空";
+      } else {
+        if (unValue.length < 6) {
+          //用户名长度非法
+          userpwdErrorSpan.innerText = "密码长度大于6";
+        } else {
+          var reg1 = /^[a-zA-Z0-9]+$/
+          if (reg1.test(unValue)) {
+            //无特殊符号
+            userpwdRightSpan.innerText = '注册成功';
+            userpwdErrorSpan.innerText = ''
+          } else {
+            userpwdRightSpan.innerText = '密码不符合要求'
+            userpwdErrorSpan.innerText = '';
+          }
+        }
+      }
+    }
+    userpwdEle.onfocus = function () {
+      //清空非法value
+      if (userpwdErrorSpan.innerText != '') {
+        this.value = '';
+      }
+    }
+
+    var submitBtn = document.getElementById("submitBtn");
+    submitBtn.onclick = function () {
+      userpwdEle.blur();
+      username.blur();
+      if (usernameErrorSpan == "" && userpwdErrorSpan == "") {
+        //获取表单对象
+        var userFormElt = document.getElementById("userForm");
+        //提交表单
+        userFormElt.submit();
+      }
+    }
+
+  </script>
